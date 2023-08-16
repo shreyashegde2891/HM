@@ -13,22 +13,22 @@ session = Session()
 app = FastAPI()
 
 
-@app.get("/hraQuestions/Clinical")
+@app.get("/hraQuestions/clinical")
 async def get_questions(response_model=list[Questions]):
         return (getResponses(session,"Clinical"))
 
-@app.get("/hraQuestions/Lifestyle")
+@app.get("/hraQuestions/lifestyle")
 async def get_questions(response_model=list[Questions]):
         return (getResponses(session,"Lifestyle"))
 
-@app.get("/hraQuestions/Mental")
+@app.get("/hraQuestions/mental")
 async def get_questions(response_model=list[Questions]):
         return (getResponses(session,"Mental"))
 
-@app.get("/hraQuestions/Nutrition")
+@app.get("/hraQuestions/nutrition")
 async def get_questions(response_model=list[Questions]):
         return (getResponses(session,"Nutrition"))
 
-@app.get("/hraQuestions/Fitness")
+@app.get("/hraQuestions/fitness")
 async def get_questions(response_model=list[Questions]):
         return (getResponses(session,"Fitness"))
