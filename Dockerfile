@@ -3,10 +3,10 @@ FROM python:3.11.4-slim
 # Allow statements and log 
 ENV PYTHONUNBUFFERED True
 # Copy local code to the container image.
-ENV APP_HOME /app
-WORKDIR $APP_HOME
+#ENV APP_HOME /app
+WORKDIR /usr/app/src
 COPY . ./
 # Install production dependencies.
 RUN pip install -r requirements.txt
 # Run
-CMD ["python", "main.py"]
+CMD ["uvicorn", "main:app"]
