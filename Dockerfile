@@ -9,4 +9,4 @@ COPY . ./
 # Install production dependencies.
 RUN pip install -r requirements.txt
 # Run
-CMD ["uvicorn", "main:app"]
+CMD ["uvicorn", "main:app","--port","8080"]
