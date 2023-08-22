@@ -22,7 +22,7 @@ class Questions(Base):
       }
 
 class quesResponse(BaseModel):
-   id: int
+   id: str
    response: str
 
 class responseList(BaseModel):
@@ -60,9 +60,9 @@ class calculateScore():
       self.gender = responses.gender
 
       for res in responses.answers:
-         if res.id == 1:
+         if res.id == "height":
             self.ht = int(res.response) 
-         elif res.id == 2:
+         elif res.id == "weight":
             self.wt = int(res.response)
             self.bmi = self.wt / ((self.ht * 0.01)**2)
 
@@ -78,26 +78,26 @@ class calculateScore():
             elif self.bmi > 30:
                self.recommendations.append("Obese: Complete 7k-10k steps daily")
 
-         if res.id == 3 or res.id == 4:
+         if res.id == "ongoingMedicalCondition" or res.id == "ongoingSymptoms":
             if res.response.lower() == "no":
                self.clinicalScore+=40
             
-         if res.id ==5:
+         if res.id == "alcohol":
             if res.response.lower() == "no":
                self.lifestyleScore+=40
             else:
                self.recommendations.append("Restrict Alcohol consumption 1-2 drink/week")
-         if res.id == 6:
+         if res.id == "tobacco":
             if res.response.lower() == "no":
                self.lifestyleScore+=40
             else:
                self.recommendations.append("Restrict smoking  to 1 stick per day")         
-         if res.id == 7 or res.id == 8:
+         if res.id == "pastDoctorVisit" or res.id == "pastBloodTest":
             if res.response.lower() == "yes":
                self.clinicalScore+=40
             else:
                self.recommendations.append("Vsit your treating doctor every 6 months")
-         if res.id==9:
+         if res.id == "bloodSugar":
             if res.response == "HbA1c <5.6 or FBS <60 or RBS <80":
                self.clinicalScore+=10
                self.recommendations.append("Visit your doctor and get HbA1c checked")
@@ -111,7 +111,7 @@ class calculateScore():
             else:
                self.recommendations.append("Visit your doctor to get your HbA1c checked")
 
-         if res.id ==10:
+         if res.id == "bloodPressure":
             if res.response == ">140/100 mmHg":
                #self.clinicalScore+=10
                self.recommendations.append("Visit your doctor and get Blood Pressure Tested")
@@ -122,7 +122,7 @@ class calculateScore():
                self.clinicalScore+=40
             self.recommendations.append("Visit your doctor to get your Blood Pressure checked")
 
-         if res.id == 11:
+         if res.id == "cholestrol":
             if res.response == "More than 240":
                #self.clinicalScore+=10
                self.recommendations.append("Visit your doctor and get cholestrol Tested")
@@ -134,11 +134,11 @@ class calculateScore():
             else:
                self.recommendations.append("Visit your doctor to get your cholestrol checked")
 
-         if res.id == 12 or res.id == 13:
+         if res.id == "medicalConditioninFamily" or res.id == "surgicalHistory":
             if res.response.lower() == "no":
                self.clinicalScore+=40
             
-         if res.id == 14:
+         if res.id == "sleep":
             if res.response == "Less than 6 hrs":
                self.lifestyleScore+=10
             elif res.response == "6.1-7.9 hrs":
@@ -147,7 +147,7 @@ class calculateScore():
                self.lifestyleScore+=40
             self.recommendations.append("Adequate amount of Sleep is around 8hrs/day")
 
-         if res.id ==15:
+         if res.id == "workLifeBalance":
             if res.response == "Daily":
                self.mentalScore+=20
             elif res.response == "Sometimes/ Often":
@@ -159,7 +159,7 @@ class calculateScore():
             else:
                self.recommendations.append("Adapt time of 20 mins for your hobby or walk with music")
 
-         if res.id == 16:
+         if res.id == "stressed":
             if res.response == "Daily":
                self.mentalScore+=0
                self.recommendations.append("Identify reasons of stress, pen down thoughts before sleep")
@@ -172,7 +172,7 @@ class calculateScore():
             else:
                self.mentalScore+=20
          
-         if res.id == 17:
+         if res.id == "exercise":
             if res.response == "Daily 5-6 time/week":
                self.fitnessScore+=40
                self.exerciseFactor = 1.9
@@ -187,7 +187,7 @@ class calculateScore():
             else:
                self.recommendations.append("Initiate 20 mins of day for any physical activity")
                self.exerciseFactor = 1.2
-         if res.id == 18:
+         if res.id == "workProfile":
             if res.response == "Sitting more than 8hrs":
                self.lifestyleScore+=0
             elif res.response == "Long Standing hours":
@@ -197,7 +197,7 @@ class calculateScore():
             elif res.response == "Field work/ Hosuehold work":
                self.lifestyleScore+=20
 
-         if res.id == 19:
+         if res.id == "waterConsumption":
             if res.response == "1-2 glass":
                self.nutritionScore+=0
                self.recommendations.append("Drink a minimum of 4 -5  glass/day")
@@ -210,7 +210,7 @@ class calculateScore():
             elif res.response == "More than 8 glass":
                self.nutritionScore+=20
 
-         if res.id == 20:
+         if res.id == "junkFood":
             if res.response == "Daily":
                self.nutritionScore+=0
                self.recommendations.append("Restrict consumption to 1-2 times/week ")
