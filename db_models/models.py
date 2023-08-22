@@ -236,9 +236,9 @@ class calculateScore():
       
       self.completeHealthScore = (0.3 * self.clinicalScore) + (0.3 * self.lifestyleScore) + (0.1 * self.nutritionScore) + (0.15 * self.fitnessScore) + (0.15 * self.mentalScore)
       if self.gender == "male":
-         self.bmr = ((10 * self.wt) + (6.25 * self.ht) - (5 * self.age) + 5) * self.exerciseFactor
+         self.bmr = ((13.397 * self.wt) + (4.79 * self.ht) - (5.67 * self.age) + 88.362) * self.exerciseFactor
       else:
-         self.bmr = ((10 * self.wt) + (6.25 * self.ht) - (5 * self.age) -161 ) * self.exerciseFactor
+         self.bmr = ((9.24 * self.wt) + (3.09 * self.ht) - (4.33 * self.age) +447.593 ) * self.exerciseFactor
    def returnJson(a):
       return{
          "lifestyleScore":a.lifestyleScore,
@@ -248,8 +248,8 @@ class calculateScore():
          "nutritionScore":a.nutritionScore,
          "completeHealthScore":a.completeHealthScore,
          "recommendations":a.recommendations,
-         "BMR calculation Method":"Mifflin-St Jeor Equation",
+         "BMR calculation Method":"Harris-Benedict Equation",
          "caloriesToMaintainWeight": str(a.bmr) + "Calories",
-         "caloriesToLoseWeight": str(a.bmr-500) + "Calories",
-         "caloriesToGainWeight": str(a.bmr+500) + "Calories"
+         "caloriesToLoseWeight": str(a.bmr-500) + "Calories to lose 1 pound / week",
+         "caloriesToGainWeight": str(a.bmr+500) + "Calories to gain 1 pount / week"
       }
