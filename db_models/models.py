@@ -25,6 +25,10 @@ class quesResponse(BaseModel):
    id: int
    response: str
 
+class responseList(BaseModel):
+   age: int
+   gender:str
+   answers: list[quesResponse]
 
 class calculateScore():
    lifestyleScore = 0
@@ -34,9 +38,13 @@ class calculateScore():
    nutritionScore = 0
    completeHealthScore = 0
    recommendations = []
+   age = 0
+   gender = "male"
    ht = 0
    wt = 0
    bmi = 0.0
+   bmr = 0
+   exerciseFactor = 1.2
 
    def __init__(self,responses):
       #for res in responses:
@@ -48,8 +56,10 @@ class calculateScore():
       self.nutritionScore = 0
       self.completeHealthScore = 0
       self.recommendations = []
+      self.age = responses.age
+      self.gender = responses.gender
 
-      for res in responses:
+      for res in responses.answers:
          if res.id == 1:
             self.ht = int(res.response) 
          elif res.id == 2:
@@ -165,15 +175,18 @@ class calculateScore():
          if res.id == 17:
             if res.response == "Daily 5-6 time/week":
                self.fitnessScore+=40
+               self.exerciseFactor = 1.9
             elif res.response == "2-3 times /weekly":
                self.fitnessScore+=20
                self.recommendations.append("Try be more regular for around 4-5 days/week")
+               self.exerciseFactor = 1.6
             elif res.response == "once a week":
                self.fitnessScore+=10
                self.recommendations.append("Initiate 20 mins of day for any physical activity")
+               self.exerciseFactor = 1.4
             else:
                self.recommendations.append("Initiate 20 mins of day for any physical activity")
-
+               self.exerciseFactor = 1.2
          if res.id == 18:
             if res.response == "Sitting more than 8hrs":
                self.lifestyleScore+=0
@@ -222,7 +235,10 @@ class calculateScore():
          self.nutritionScore = (self.nutritionScore / 40) * 100
       
       self.completeHealthScore = (0.3 * self.clinicalScore) + (0.3 * self.lifestyleScore) + (0.1 * self.nutritionScore) + (0.15 * self.fitnessScore) + (0.15 * self.mentalScore)
-   
+      if self.gender == "male":
+         self.bmr = ((10 * self.wt) + (6.25 * self.ht) - (5 * self.age) + 5) * self.exerciseFactor
+      else:
+         self.bmr = ((10 * self.wt) + (6.25 * self.ht) - (5 * self.age) -161 ) * self.exerciseFactor
    def returnJson(a):
       return{
          "lifestyleScore":a.lifestyleScore,
@@ -231,5 +247,9 @@ class calculateScore():
          "fitnessScore":a.fitnessScore,
          "nutritionScore":a.nutritionScore,
          "completeHealthScore":a.completeHealthScore,
-         "recommendations":a.recommendations
+         "recommendations":a.recommendations,
+         "BMR calculation Method":"Mifflin-St Jeor Equation",
+         "caloriesToMaintainWeight": str(a.bmr) + "Calories",
+         "caloriesToLoseWeight": str(a.bmr-500) + "Calories",
+         "caloriesToGainWeight": str(a.bmr+500) + "Calories"
       }
