@@ -6,7 +6,9 @@ from db_models.crud import getResponses
 from db_models.database import Base, Session, engine
 from db_models.models import Questions
 from fastapi.encoders import jsonable_encoder
-
+from db_models.models import quesResponse
+from db_models.models import calculateScore
+from typing import List
 Base.metadata.create_all(bind=engine)
 
 session = Session()
@@ -32,3 +34,10 @@ async def get_questions(response_model=list[Questions]):
 @app.get("/hraQuestions/fitness")
 async def get_questions(response_model=list[Questions]):
         return (getResponses(session,"Fitness"))
+
+@app.post("/hraResponses")
+async def get_body(items:list[quesResponse]):
+        #print(items)
+        a=calculateScore(items)
+        return (calculateScore.returnJson(a))
+        #return (items)
