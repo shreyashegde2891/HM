@@ -64,7 +64,7 @@ class calculateScore():
             self.ht = int(res.response) 
          elif res.id == 2:
             self.wt = int(res.response)
-            self.bmi = self.ht / ((self.wt * 0.01)**2)
+            self.bmi = self.wt / ((self.ht * 0.01)**2)
 
             if self.bmi < 18.5:
                self.lifestyleScore+=10
