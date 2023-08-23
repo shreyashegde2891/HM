@@ -4,7 +4,8 @@ from sqlalchemy.ext.serializer import loads, dumps
 def getResponses(db:Session,question_category: str):
     print("Crud Called")
     print("Issuing Command")
-    result = db.query(models.Questions).filter(models.Questions.question_category.match("%Clinical%"))
+    question_category_string = "%" + question_category + "%"
+    result = db.query(models.Questions).filter(models.Questions.question_category.match(question_category_string))
     serialized = [z.to_json() for z in result]
     print(serialized)
     return (serialized)
