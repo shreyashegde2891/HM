@@ -58,7 +58,7 @@ class calculateScore():
       self.recommendations = []
       self.age = responses.age
       self.gender = responses.gender
-
+      bmiFlag = False
       for res in responses.answers:
          if res.id == "height":
             self.ht = int(res.response) 
@@ -67,7 +67,7 @@ class calculateScore():
             self.wt = int(res.response)
             
 
-         if self.ht != 0 and self.wt != 0:
+         if self.ht != 0 and self.wt != 0 and bmiFlag == False:
             self.bmi = self.wt / ((self.ht * 0.01)**2)
             if self.bmi < 18.5:
                self.lifestyleScore+=10
@@ -80,6 +80,7 @@ class calculateScore():
                self.recommendations.append("Overweight: Complete 7k-10k steps daily")
             elif self.bmi > 30:
                self.recommendations.append("Obese: Complete 7k-10k steps daily")
+            bmiFlag = True
 
          if res.id == "ongoingMedicalCondition" or res.id == "ongoingSymptoms":
             if res.response.lower() == "no":
