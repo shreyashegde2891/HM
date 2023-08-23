@@ -45,7 +45,7 @@ class calculateScore():
    bmi = 0.0
    bmr = 0
    exerciseFactor = 1.2
-
+   bmiCategory = "Normal"
    def __init__(self,responses):
       #for res in responses:
          #print (res)
@@ -71,15 +71,15 @@ class calculateScore():
             self.bmi = self.wt / ((self.ht * 0.01)**2)
             if self.bmi < 18.5:
                self.lifestyleScore+=10
-               self.recommendations.append("Underweight: Intiiate 5-7k steps weekly thrice")
+               self.bmiCategory = "Underweight"
             elif self.bmi >=18.5 and self.bmi <24.99:
                self.lifestyleScore+=40
-               self.recommendations.append("Normal: Initiate 7k-10k steps weekly 5 times")
+               self.bmiCategory = "Normal"
             elif self.bmi >25 and self.bmi < 29.99:
                self.lifestyleScore+=20
-               self.recommendations.append("Overweight: Complete 7k-10k steps daily")
+               self.bmiCategory = "Overweight"
             elif self.bmi > 30:
-               self.recommendations.append("Obese: Complete 7k-10k steps daily")
+               self.bmiCategory = "Obese"
             bmiFlag = True
 
          if res.id == "ongoingMedicalCondition" or res.id == "ongoingSymptoms":
@@ -179,15 +179,15 @@ class calculateScore():
          if res.id == "exercise":
             if res.response == "Daily 5-6 time/week":
                self.fitnessScore+=40
-               self.exerciseFactor = 1.9
+               self.exerciseFactor = 1.7
             elif res.response == "2-3 times /weekly":
                self.fitnessScore+=20
                self.recommendations.append("Try be more regular for around 4-5 days/week")
-               self.exerciseFactor = 1.6
+               self.exerciseFactor = 1.55
             elif res.response == "once a week":
                self.fitnessScore+=10
                self.recommendations.append("Initiate 20 mins of day for any physical activity")
-               self.exerciseFactor = 1.4
+               self.exerciseFactor = 1.375
             else:
                self.recommendations.append("Initiate 20 mins of day for any physical activity")
                self.exerciseFactor = 1.2
@@ -245,6 +245,7 @@ class calculateScore():
          self.bmr = ((9.24 * self.wt) + (3.09 * self.ht) - (4.33 * self.age) +447.593 ) * self.exerciseFactor
    def returnJson(a):
       return{
+         "category":a.bmiCategory,
          "lifestyleScore":a.lifestyleScore,
          "clinicalScore":a.clinicalScore,
          "mentalScore":a.mentalScore,
@@ -252,8 +253,8 @@ class calculateScore():
          "nutritionScore":a.nutritionScore,
          "completeHealthScore":a.completeHealthScore,
          "recommendations":a.recommendations,
-         "BMR calculation Method":"Harris-Benedict Equation",
-         "caloriesToMaintainWeight": str(a.bmr) + "Calories",
-         "caloriesToLoseWeight": str(a.bmr-500) + "Calories to lose 1 pound / week",
-         "caloriesToGainWeight": str(a.bmr+500) + "Calories to gain 1 pount / week"
+         "caloriesToMaintainWeight": a.bmr,
+         "-0.25kgPerWeek": (a.bmr*0.9),
+         "-0.5kgPerWeek": (a.bmr*0.8),
+         "-1kgPerWeek":(a.bmr*0.6)
       }
