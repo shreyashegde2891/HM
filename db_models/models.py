@@ -67,6 +67,7 @@ class calculateScore():
             self.wt = int(res.response)
             self.bmi = self.wt / ((self.ht * 0.01)**2)
 
+         if self.ht != 0 and self.wt != 0:
             if self.bmi < 18.5:
                self.lifestyleScore+=10
                self.recommendations.append("Underweight: Intiiate 5-7k steps weekly thrice")
