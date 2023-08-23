@@ -10,12 +10,20 @@ from db_models.models import quesResponse
 from db_models.models import responseList
 from db_models.models import calculateScore
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware
+
 Base.metadata.create_all(bind=engine)
 
 session = Session()
 app = FastAPI()
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.get("/hraQuestions/clinical")
 async def get_questions(response_model=list[Questions]):
         return (getResponses(session,"Clinical"))
