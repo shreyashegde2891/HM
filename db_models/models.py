@@ -102,14 +102,14 @@ class calculateScore():
             else:
                self.recommendations.append("Vsit your treating doctor every 6 months")
          if res.id == "bloodSugar":
-            if res.response == "HbA1c <5.6 or FBS <60 or RBS <80":
+            if res.response == "Less than 5.6":
                self.clinicalScore+=10
                self.recommendations.append("Visit your doctor and get HbA1c checked")
-            elif res.response == "HbA1c in the range of>= 5.6 to 5.79 OR FBS in the range of > 60 to 100 Or RBS in the range of >=80 to 100":
+            elif res.response == "Between 5.6 and 5.79":
                self.clinicalScore+=40
-            elif res.response == "HbA1c in the range of >= 5.8 to 6.49 Or FBS in the range of>= 101 to 125 Or RBS in the range of >=101 to 140":
+            elif res.response == "Between 5.8 and 6.49,":
                self.clinicalScore+=20
-               self.recommendations.append("Repeat HbA1c test every 6 months")
+               self.recommendations.append("Greater than 6.5")
             elif res.response == "HbA1c >= 6.5 Or FBS >=125 Or RBS >= 200":
                self.recommendations.append("Repeat HbA1c test every 6 months")
             else:
