@@ -137,7 +137,7 @@ class calculateScore():
          if res.id == "bloodSugar":
             if res.response == "Less than 5.6":
                self.clinicalScore+=10
-               self.recommendations.append("Visit your doctor and get HbA1c checked")
+               #self.recommendations.append("Visit your doctor and get HbA1c checked")
             elif res.response == "Between 5.6 and 5.79":
                self.clinicalScore+=40
             elif res.response == "Between 5.8 and 6.49,":
@@ -154,7 +154,7 @@ class calculateScore():
                self.recommendations.append("Visit your doctor and get Blood Pressure Tested")
             elif res.response == "130-139/90 to 99 mmHg":
                self.clinicalScore+=20
-               self.recommendations.append("Repeat Blood Pressure Test every 6 months")
+               #self.recommendations.append("Repeat Blood Pressure Test every 6 months")
             elif res.response == "120-80 mmHg or below":
                self.clinicalScore+=40
             self.recommendations.append("Visit your doctor to get your Blood Pressure checked")
@@ -165,7 +165,7 @@ class calculateScore():
                self.recommendations.append("Visit your doctor and get cholestrol Tested")
             elif res.response == "Between 200 to 240":
                self.clinicalScore+=20
-               self.recommendations.append("Repeat cholestrol Test every 6 months")
+               #self.recommendations.append("Repeat cholestrol Test every 6 months")
             elif res.response == "Less than 200":
                self.clinicalScore+=40
             else:
@@ -185,7 +185,7 @@ class calculateScore():
             #self.recommendations.append("Adequate amount of Sleep is around 8hrs/day")
 
          if res.id == "workLifeBalance":
-            if res.response == "Daily":
+            if res.response == "Yes":
                self.mentalScore+=20
             elif res.response == "Often":
                self.mentalScore+=10
@@ -273,7 +273,7 @@ class calculateScore():
                self.fitnessScore+=10
             elif res.response == "5000-7500":
                self.fitnessScore+=20
-            elif res.response == "7501-1000":
+            elif res.response == "7501-10000":
                self.fitnessScore+=30
             elif res.response =="Above 10000":
                self.fitnessScore+=40
