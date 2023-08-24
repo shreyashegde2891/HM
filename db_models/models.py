@@ -95,7 +95,7 @@ class calculateScore():
       for res in responses.answers:
          if res.id == "height":
             self.ht = int(res.response) 
-            self.ht = self.ht * 2.54
+            #self.ht = self.ht * 2.54
          elif res.id == "weight":
             self.wt = int(res.response)
             
