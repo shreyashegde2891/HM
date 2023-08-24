@@ -90,7 +90,9 @@ class calculateScore():
       self.mentalScore = 0
       self.nutritionScore = 0
       self.completeHealthScore = 0
-      self.recommendations = []
+      self.clinicalRecommendations = []
+      self.lifestyleRecommendations = []
+      self.wellnessRecommendations = []
       self.age = responses.age
       self.gender = responses.gender
       bmiFlag = False
@@ -125,53 +127,53 @@ class calculateScore():
             if res.response.lower() == "no":
                self.lifestyleScore+=40
             else:
-               self.recommendations.append("Restrict Alcohol consumption 1-2 drink/week")
+               self.lifestyleRecommendations.append("Restrict Alcohol consumption 1-2 drink/week")
          if res.id == "tobacco":
             if res.response.lower() == "no":
                self.lifestyleScore+=40
             else:
-               self.recommendations.append("Restrict smoking  to 1 stick per day")         
+               self.lifestyleRecommendations.append("Restrict smoking  to 1 stick per day")         
          if res.id == "pastDoctorVisit" or res.id == "pastBloodTest":
             if res.response.lower() == "yes":
                self.clinicalScore+=40
             else:
-               self.recommendations.append("Vsit your treating doctor every 6 months")
+               self.lifestyleRecommendations.append("Vsit your treating doctor every 6 months")
          if res.id == "bloodSugar":
             if res.response == "Less than 5.6":
                self.clinicalScore+=10
-               #self.recommendations.append("Visit your doctor and get HbA1c checked")
+               self.clinicalRecommendations.append("Visit your doctor to get HbA1c checked")
             elif res.response == "Between 5.6 and 5.79":
                self.clinicalScore+=40
             elif res.response == "Between 5.8 and 6.49,":
                self.clinicalScore+=20
-               self.recommendations.append("Greater than 6.5")
+               self.clinicalRecommendations.append("You are in pre-diabetic range. Cut down on sugar intake.")
             elif res.response == "HbA1c >= 6.5 Or FBS >=125 Or RBS >= 200":
-               self.recommendations.append("Repeat HbA1c test every 6 months")
+               self.clinicalRecommendations.append("Repeat HbA1c test every 6 months")
             else:
-               self.recommendations.append("Visit your doctor to get your HbA1c checked")
+               self.clinicalRecommendations.append("Visit your doctor to get your HbA1c checked")
 
          if res.id == "bloodPressure":
             if res.response == ">140/100 mmHg":
                #self.clinicalScore+=10
-               self.recommendations.append("Visit your doctor and get Blood Pressure Tested")
+               self.clinicalRecommendations.append("Visit your doctor and get Blood Pressure Tested")
             elif res.response == "130-139/90 to 99 mmHg":
                self.clinicalScore+=20
-               #self.recommendations.append("Repeat Blood Pressure Test every 6 months")
+               self.clinicalRecommendations.append("Repeat Blood Pressure Test every 6 months")
             elif res.response == "120-80 mmHg or below":
                self.clinicalScore+=40
-            self.recommendations.append("Visit your doctor to get your Blood Pressure checked")
+            self.clinicalRecommendations.append("Visit your doctor to get your Blood Pressure checked")
 
          if res.id == "cholestrol":
             if res.response == "More than 240":
                #self.clinicalScore+=10
-               self.recommendations.append("Visit your doctor and get cholestrol Tested")
+               self.clinicalRecommendations.append("Repeat cholestrol Test every 6 months")
             elif res.response == "Between 200 to 240":
                self.clinicalScore+=20
-               #self.recommendations.append("Repeat cholestrol Test every 6 months")
+               self.lifestyleRecommendations.append("Reduce deep fried food to reduce cholestrol")
             elif res.response == "Less than 200":
                self.clinicalScore+=40
             else:
-               self.recommendations.append("Visit your doctor to get your cholestrol checked")
+               self.clinicalRecommendations.append("Visit your doctor to get your cholestrol checked")
 
          if res.id == "medicalConditioninFamily" or res.id == "surgicalHistory":
             if res.response.lower() == "no":
@@ -180,34 +182,36 @@ class calculateScore():
          if res.id == "sleep":
             if res.response == "Less than 6 hrs":
                self.lifestyleScore+=10
+               self.lifestyleRecommendations.append("Try to get a minimum sleep of 8 hours per day.")
             elif res.response == "6 to 8 hrs":
                self.lifestyleScore+=20
+               self.lifestyleRecommendations.append("Try to get a minimum sleep of 8 hours per day.")
             elif res.response == "More than 8 hours":
                self.lifestyleScore+=40
-            #self.recommendations.append("Adequate amount of Sleep is around 8hrs/day")
+            
 
          if res.id == "workLifeBalance":
             if res.response == "Yes":
                self.mentalScore+=20
             elif res.response == "Often":
                self.mentalScore+=10
-               self.recommendations.append("Adapt time of 20 mins for your hobby or walk with music")
+               self.wellnessRecommendations.append("Adapt time of 20 mins for your hobby or walk with music")
             elif res.response == "Rarely":
                self.mentalScore+=10
-               self.recommendations.append("Adapt time of 20 mins for your hobby or walk with music")
+               self.wellnessRecommendations.append("Adapt time of 20 mins for your hobby or walk with music")
             else:
-               self.recommendations.append("Adapt time of 20 mins for your hobby or walk with music")
+               self.wellnessRecommendations.append("Adapt time of 20 mins for your hobby or walk with music")
 
          if res.id == "stressed":
             if res.response == "Daily":
                self.mentalScore+=0
-               self.recommendations.append("Identify reasons of stress, pen down thoughts before sleep")
+               self.wellnessRecommendations.append("Identify reasons of stress, pen down thoughts before sleep")
             elif res.response == "Often":
                self.mentalScore+=10
-               self.recommendations.append("Take time of 30 mins for any physical activity ")
+               self.wellnessRecommendations.append("Take time of 30 mins for any physical activity ")
             elif res.response == "Rarely":
                self.mentalScore+=10
-               self.recommendations.append("Take time of 30 mins for any physical activity")
+               self.wellnessRecommendations.append("Take time of 30 mins for any physical activity")
             else:
                self.mentalScore+=20
          
@@ -217,15 +221,16 @@ class calculateScore():
                self.exerciseFactor = 1.7
             elif res.response == "2-3 times a week":
                self.fitnessScore+=20
-               self.recommendations.append("Try be more regular for around 4-5 days/week")
+               self.lifestyleRecommendations.append("Try to get some exercise for around 4-5 days/week")
                self.exerciseFactor = 1.55
             elif res.response == "once a week":
                self.fitnessScore+=10
-               self.recommendations.append("Initiate 20 mins of day for any physical activity")
+               self.lifestyleRecommendations.append("Initiate 20 mins of day for any physical activity")
                self.exerciseFactor = 1.375
             else:
-               self.recommendations.append("Initiate 20 mins of day for any physical activity")
+               self.lifestyleRecommendations.append("Initiate 20 mins of day for any physical activity")
                self.exerciseFactor = 1.2
+
          if res.id == "workProfile":
             if res.response == "Sitting more than 8hrs":
                self.lifestyleScore+=0
@@ -239,26 +244,26 @@ class calculateScore():
          if res.id == "waterConsumption":
             if res.response == "1-2 glass per day":
                self.nutritionScore+=0
-               self.recommendations.append("Drink a minimum of 4 -5  glass/day")
+               self.wellnessRecommendations.append("Drink a minimum of 4 -5  glass/day")
             elif res.response == "Less than 6 glasses per day":
                self.nutritionScore+=10
-               self.recommendations.append("Increase water intake to 8 glass/day")
+               self.wellnessRecommendations.append("Increase water intake to 8 glass/day")
             elif res.response == "6-8 glasses per day":
                self.nutritionScore+=10
-               self.recommendations.append("Increase water intake to 8 glass/day")
+               self.wellnessRecommendations.append("Increase water intake to 8 glass/day")
             elif res.response == "More than 8 glass per day":
                self.nutritionScore+=20
 
          if res.id == "junkFood":
             if res.response == "Daily":
                self.nutritionScore+=0
-               self.recommendations.append("Restrict consumption to 1-2 times/week ")
+               self.lifestyleRecommendations.append("Restrict consumption to 1-2 times/week ")
             elif res.response == "Weekly":
                self.nutritionScore+=10
-               self.recommendations.append("Indulgence once in a while is healthy behavior")
+               self.lifestyleRecommendations.append("Indulgence once in a while is healthy behavior")
             elif res.response == "Ocassionally":
                self.nutritionScore+=10
-               self.recommendations.append("Reducing Ingulgence in Junk food is beneficial")
+               self.lifestyleRecommendations.append("Reducing Ingulgence in Junk food is beneficial")
             elif res.response == "Rarely":
                self.nutritionScore+=20
          
@@ -305,9 +310,9 @@ class calculateScore():
          "fitnessScore":a.fitnessScore,
          "nutritionScore":a.nutritionScore,
          "completeHealthScore":a.completeHealthScore,
-         "clinicalRecommendations":a.recommendations,
-         "lifestyleRecommendations":a.recommendations,
-         "wellnessRecommendations":a.recommendations,
+         "clinicalRecommendations":a.clinicalRecommendations,
+         "lifestyleRecommendations":a.lifestyleRecommendations,
+         "wellnessRecommendations":a.wellnessRecommendations,
          "caloriesToMaintainWeight": a.bmr,
          "-0.25kgPerWeek": (a.bmr*0.9),
          "-0.5kgPerWeek": (a.bmr*0.8),
