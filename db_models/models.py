@@ -70,7 +70,9 @@ class calculateScore():
    mentalScore = 0
    nutritionScore = 0
    completeHealthScore = 0
-   recommendations = []
+   clinicalRecommendations = []
+   lifestyleRecommendations = []
+   wellnessRecommendations = []
    age = 0
    gender = "male"
    ht = 0
@@ -309,7 +311,10 @@ class calculateScore():
          "caloriesToMaintainWeight": a.bmr,
          "-0.25kgPerWeek": (a.bmr*0.9),
          "-0.5kgPerWeek": (a.bmr*0.8),
-         "-1kgPerWeek":(a.bmr*0.6)
+         "-1kgPerWeek":(a.bmr*0.6),
+         "healthScoreInfo":{
+            "key":"value",
+         }
       }
 
 def scaling(dataframe):
