@@ -178,16 +178,16 @@ class calculateScore():
          if res.id == "sleep":
             if res.response == "Less than 6 hrs":
                self.lifestyleScore+=10
-            elif res.response == "6.1-7.9 hrs":
+            elif res.response == "6 to 8 hrs":
                self.lifestyleScore+=20
-            elif res.response == "Around 8 hrs and more":
+            elif res.response == "More than 8 hours":
                self.lifestyleScore+=40
-            self.recommendations.append("Adequate amount of Sleep is around 8hrs/day")
+            #self.recommendations.append("Adequate amount of Sleep is around 8hrs/day")
 
          if res.id == "workLifeBalance":
             if res.response == "Daily":
                self.mentalScore+=20
-            elif res.response == "Sometimes/ Often":
+            elif res.response == "Often":
                self.mentalScore+=10
                self.recommendations.append("Adapt time of 20 mins for your hobby or walk with music")
             elif res.response == "Rarely":
@@ -200,7 +200,7 @@ class calculateScore():
             if res.response == "Daily":
                self.mentalScore+=0
                self.recommendations.append("Identify reasons of stress, pen down thoughts before sleep")
-            elif res.response == "Sometimes/ Often":
+            elif res.response == "Often":
                self.mentalScore+=10
                self.recommendations.append("Take time of 30 mins for any physical activity ")
             elif res.response == "Rarely":
@@ -210,10 +210,10 @@ class calculateScore():
                self.mentalScore+=20
          
          if res.id == "exercise":
-            if res.response == "Daily 5-6 time/week":
+            if res.response == "5-6 time a week":
                self.fitnessScore+=40
                self.exerciseFactor = 1.7
-            elif res.response == "2-3 times /weekly":
+            elif res.response == "2-3 times a week":
                self.fitnessScore+=20
                self.recommendations.append("Try be more regular for around 4-5 days/week")
                self.exerciseFactor = 1.55
@@ -231,20 +231,20 @@ class calculateScore():
                self.lifestyleScore+=10
             elif res.response == "Travelling":
                self.lifestyleScore+=10
-            elif res.response == "Field work/ Hosuehold work":
+            elif res.response == "Field work/Household work":
                self.lifestyleScore+=20
 
          if res.id == "waterConsumption":
-            if res.response == "1-2 glass":
+            if res.response == "1-2 glass per day":
                self.nutritionScore+=0
                self.recommendations.append("Drink a minimum of 4 -5  glass/day")
-            elif res.response == "Less than 6 glass":
+            elif res.response == "Less than 6 glasses per day":
                self.nutritionScore+=10
                self.recommendations.append("Increase water intake to 8 glass/day")
-            elif res.response == "6-8 glass":
+            elif res.response == "6-8 glasses per day":
                self.nutritionScore+=10
                self.recommendations.append("Increase water intake to 8 glass/day")
-            elif res.response == "More than 8 glass":
+            elif res.response == "More than 8 glass per day":
                self.nutritionScore+=20
 
          if res.id == "junkFood":
@@ -257,19 +257,37 @@ class calculateScore():
             elif res.response == "Ocassionally":
                self.nutritionScore+=10
                self.recommendations.append("Reducing Ingulgence in Junk food is beneficial")
-            elif res.response == "Hardly ever/ rarely":
+            elif res.response == "Rarely":
                self.nutritionScore+=20
+         
+         if res.id == "fruitsVegetables":
+            if res.response == "Absolutely":
+               self.nutritionScore+=40
+            elif res.response == "Often":
+               self.nutritionScore+=30
+            elif res.response == "Rarely":
+               self.nutritionScore+=10
+         
+         if res.id == "steps":
+            if res.response == "Below 5000":
+               self.fitnessScore+=10
+            elif res.response == "5000-7500":
+               self.fitnessScore+=20
+            elif res.response == "7501-1000":
+               self.fitnessScore+=30
+            elif res.response =="Above 10000":
+               self.fitnessScore+=40
       
       if self.clinicalScore != 0:
          self.clinicalScore = (self.clinicalScore / 360) * 100
       if self.fitnessScore != 0:
-         self.fitnessScore = (self.fitnessScore / 40) * 100
+         self.fitnessScore = (self.fitnessScore / 80) * 100
       if self.lifestyleScore !=0:
          self.lifestyleScore = (self.lifestyleScore / 220) * 100
       if self.mentalScore!=0:
          self.mentalScore = (self.mentalScore / 40) * 100
       if self.nutritionScore != 0:
-         self.nutritionScore = (self.nutritionScore / 40) * 100
+         self.nutritionScore = (self.nutritionScore / 80) * 100
       
       self.completeHealthScore = (0.3 * self.clinicalScore) + (0.3 * self.lifestyleScore) + (0.1 * self.nutritionScore) + (0.15 * self.fitnessScore) + (0.15 * self.mentalScore)
       if self.gender == "male":
@@ -331,7 +349,7 @@ def recommend(dataframe,_input,ingredients=[],params={'n_neighbors':5,'return_di
             return apply_pipeline(pipeline,_input,extracted_data)
         else:
             return None
-
+   
 def extract_quoted_strings(s):
     # Find all the strings inside double quotes
     strings = re.findall(r'"([^"]*)"', s)
