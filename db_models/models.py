@@ -93,8 +93,8 @@ class calculateScore():
       self.clinicalRecommendations = []
       self.lifestyleRecommendations = []
       self.wellnessRecommendations = []
-      self.age = responses.age
-      self.gender = responses.gender
+      #self.age = responses.age
+      #self.gender = responses.gender
       bmiFlag = False
       for res in responses.answers:
          if res.id == "height":
@@ -103,6 +103,10 @@ class calculateScore():
          elif res.id == "weight":
             self.wt = int(res.response)
             
+         if res.id == "age":
+            self.age == int(responses.age)
+         if res.id == "gender":
+            self.gender = int(responses.gender)
 
          if self.ht != 0 and self.wt != 0 and bmiFlag == False:
             self.bmi = self.wt / ((self.ht * 0.01)**2)
