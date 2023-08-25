@@ -278,7 +278,7 @@ class calculateScore():
                self.nutritionScore+=30
             elif res.response == "Rarely":
                self.nutritionScore+=10
-         
+         #adding steps
          if res.id == "steps":
             if res.response == "Below 5000":
                self.exerciseFactor = 1.2
