@@ -222,18 +222,18 @@ class calculateScore():
          if res.id == "exercise":
             if res.response == "5-6 time a week":
                self.fitnessScore+=40
-               self.exerciseFactor = 1.7
+               
             elif res.response == "2-3 times a week":
                self.fitnessScore+=20
                self.lifestyleRecommendations.append("Try to get some exercise for around 4-5 days/week")
-               self.exerciseFactor = 1.55
+               
             elif res.response == "once a week":
                self.fitnessScore+=10
                self.lifestyleRecommendations.append("Initiate 20 mins of day for any physical activity")
-               self.exerciseFactor = 1.375
+               
             else:
                self.lifestyleRecommendations.append("Initiate 20 mins of day for any physical activity")
-               self.exerciseFactor = 1.2
+               
 
          if res.id == "workProfile":
             if res.response == "Sitting more than 8hrs":
@@ -281,13 +281,17 @@ class calculateScore():
          
          if res.id == "steps":
             if res.response == "Below 5000":
+               self.exerciseFactor = 1.2
                self.fitnessScore+=10
             elif res.response == "5000-7500":
                self.fitnessScore+=20
+               self.exerciseFactor = 1.375
             elif res.response == "7501-10000":
                self.fitnessScore+=30
+               self.exerciseFactor = 1.55
             elif res.response =="Above 10000":
                self.fitnessScore+=40
+               self.exerciseFactor = 1.7
       
       if self.clinicalScore != 0:
          self.clinicalScore = (self.clinicalScore / 360) * 100
