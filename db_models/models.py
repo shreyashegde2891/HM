@@ -106,7 +106,7 @@ class calculateScore():
          if res.id == "age":
             self.age == int(responses.age)
          if res.id == "gender":
-            self.gender = int(responses.gender)
+            self.gender = responses.gender
 
          if self.ht != 0 and self.wt != 0 and bmiFlag == False:
             self.bmi = self.wt / ((self.ht * 0.01)**2)
@@ -305,7 +305,7 @@ class calculateScore():
          self.nutritionScore = (self.nutritionScore / 80) * 100
       
       self.completeHealthScore = (0.3 * self.clinicalScore) + (0.3 * self.lifestyleScore) + (0.1 * self.nutritionScore) + (0.15 * self.fitnessScore) + (0.15 * self.mentalScore)
-      if self.gender == "male":
+      if self.gender == "male" or self.gender == "Male":
          self.bmr = ((13.397 * self.wt) + (4.79 * self.ht) - (5.67 * self.age) + 88.362) * self.exerciseFactor
       else:
          self.bmr = ((9.24 * self.wt) + (3.09 * self.ht) - (4.33 * self.age) +447.593 ) * self.exerciseFactor
