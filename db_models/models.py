@@ -304,7 +304,7 @@ class calculateScore():
       if self.nutritionScore != 0:
          self.nutritionScore = (self.nutritionScore / 80) * 100
       
-      self.completeHealthScore = (0.3 * self.clinicalScore) + (0.3 * self.lifestyleScore) + (0.1 * self.nutritionScore) + (0.15 * self.fitnessScore) + (0.15 * self.mentalScore)
+      self.completeHealthScore = (0.4 * self.clinicalScore) + (0.3 * self.lifestyleScore) + (0.1 * self.nutritionScore) + (0.1 * self.fitnessScore) + (0.1 * self.mentalScore)
       if self.gender == "male" or self.gender == "Male":
          self.bmr = ((13.397 * self.wt) + (4.79 * self.ht) - (5.67 * self.age) + 88.362) * self.exerciseFactor
       else:
