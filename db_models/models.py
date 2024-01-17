@@ -144,12 +144,12 @@ class calculateScore():
                self.lifestyleRecommendations.append("Vsit your treating doctor every 6 months")
          if res.id == "bloodSugar":
             if res.response == "Less than 5.6":
-               self.clinicalScore+=10
+               self.clinicalScore+=40
                self.clinicalRecommendations.append("Visit your doctor to get HbA1c checked")
             elif res.response == "Between 5.6 and 5.79":
-               self.clinicalScore+=40
-            elif res.response == "Between 5.8 and 6.49,":
                self.clinicalScore+=20
+            elif res.response == "Between 5.8 and 6.49,":
+               self.clinicalScore+=10
                self.clinicalRecommendations.append("You are in pre-diabetic range. Cut down on sugar intake.")
             elif res.response == "HbA1c >= 6.5 Or FBS >=125 Or RBS >= 200":
                self.clinicalRecommendations.append("Repeat HbA1c test every 6 months")
