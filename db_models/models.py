@@ -292,17 +292,29 @@ class calculateScore():
             elif res.response =="Above 10000":
                self.fitnessScore+=40
                self.exerciseFactor = 1.7
+            
+         if res.id == "familyDoctor":
+            if res.response == "Annually":
+               self.clinicalScore+=40
+            elif res.response == "Once in 2 years":
+               self.clinicalScore+=20
+            elif res.response == "Once in 3 years":
+               self.clinicalScore+=10
+
+         if res.id =="annualCheckup":
+            if res.response == "Yes":
+               self.clinicalScore+=40
       
       if self.clinicalScore != 0:
-         self.clinicalScore = (self.clinicalScore / 360) * 100
+         self.clinicalScore = (self.clinicalScore / 440) * 100
       if self.fitnessScore != 0:
-         self.fitnessScore = (self.fitnessScore / 80) * 100
+         self.fitnessScore = (self.fitnessScore / 40) * 100
       if self.lifestyleScore !=0:
-         self.lifestyleScore = (self.lifestyleScore / 220) * 100
+         self.lifestyleScore = (self.lifestyleScore / 160) * 100
       if self.mentalScore!=0:
-         self.mentalScore = (self.mentalScore / 40) * 100
+         self.mentalScore = (self.mentalScore / 20) * 100
       if self.nutritionScore != 0:
-         self.nutritionScore = (self.nutritionScore / 80) * 100
+         self.nutritionScore = (self.nutritionScore / 40) * 100
       
       self.completeHealthScore = (0.4 * self.clinicalScore) + (0.3 * self.lifestyleScore) + (0.1 * self.nutritionScore) + (0.1 * self.fitnessScore) + (0.1 * self.mentalScore)
       if self.gender == "male" or self.gender == "Male":
