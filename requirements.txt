@@ -6,3 +6,5 @@ numpy
 scikit-learn
 pandas
 pydantic
+functions-framework
+google.cloud.pubsub>=0.33.1

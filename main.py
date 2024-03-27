@@ -20,7 +20,7 @@ from google.cloud import pubsub_v1
 
 
 project_id = "pruinhlth-nprd-dev-scxlyx-7250"
-topic_id = "healthmgt-test "
+topic_id = "healthmgt-test"
 
 publisher = pubsub_v1.PublisherClient()
 # The `topic_path` method creates a fully qualified identifier
