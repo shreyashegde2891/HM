@@ -65,7 +65,8 @@ async def get_questions(response_model=list[Questions]):
 @app.post("/hraResponses")
 #async def get_body(items:list[quesResponse]):
 async def get_body(items:responseList):
-        res_data = jsonable_encoder(items)
+        res_data_str = f"{jsonable_encoder(items)}"
+        res_data = res_data_str.encode("utf-8")
         future = publisher.publish(topic_path, res_data)
         print(future.result())
         a=calculateScore(items)
