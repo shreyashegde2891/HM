@@ -66,7 +66,8 @@ async def get_questions(response_model=list[Questions]):
 #async def get_body(items:list[quesResponse]):
 async def get_body(items:responseList):
         a=calculateScore(items)
-        req_json=jsonable_encoder(items)
+        req_json_str=jsonable_encoder(items)
+        req_json=req_json_str.encode("utf-8")
         res_json=calculateScore.returnJson(a)
         store_json=json.loads(req_json)
         store_json.update(res_json)
