@@ -69,10 +69,12 @@ async def get_body(items:responseList):
         req_json=jsonable_encoder(items)
         #req_json=req_json_str.encode("utf-8")
         res_json=calculateScore.returnJson(a)
-        store_json=req_json#json.loads(req_json)
-        store_json.append(res_json)
+        store_json = req_json
+        store_json.update(res_json)
+        #print(temp_json)
         res_data_str = f"{store_json}"
         res_data = res_data_str.encode("utf-8")
+        #print(res_data)
         future = publisher.publish(topic_path, res_data)
         print(future.result())
         return (res_json)
