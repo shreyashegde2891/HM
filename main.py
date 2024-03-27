@@ -15,6 +15,17 @@ import pandas as pd
 from db_models.models import recommend,output_recommended_recipes
 from db_models.models import params, PredictionIn, Recipe, PredictionOut
 from random import uniform as rnd
+from fastapi.responses import JSONResponse
+from google.cloud import pubsub_v1
+
+
+project_id = "pruinhlth-nprd-dev-scxlyx-7250"
+topic_id = "healthmgt-test "
+
+publisher = pubsub_v1.PublisherClient()
+# The `topic_path` method creates a fully qualified identifier
+# in the form `projects/{project_id}/topics/{topic_id}`
+topic_path = publisher.topic_path(project_id, topic_id)
 
 Base.metadata.create_all(bind=engine)
 dataset=pd.read_csv('data/dataset.csv',compression='gzip')
@@ -54,7 +65,9 @@ async def get_questions(response_model=list[Questions]):
 @app.post("/hraResponses")
 #async def get_body(items:list[quesResponse]):
 async def get_body(items:responseList):
-        #print(items)
+        res_data = jsonable_encoder(items)
+        future = publisher.publish(topic_path, res_data)
+        print(future.result())
         a=calculateScore(items)
         return (calculateScore.returnJson(a))
         #return (items)
