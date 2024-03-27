@@ -17,7 +17,7 @@ from db_models.models import params, PredictionIn, Recipe, PredictionOut
 from random import uniform as rnd
 from fastapi.responses import JSONResponse
 from google.cloud import pubsub_v1
-
+import json
 
 project_id = "pruinhlth-nprd-dev-scxlyx-7250"
 topic_id = "healthmgt-test"
@@ -65,12 +65,16 @@ async def get_questions(response_model=list[Questions]):
 @app.post("/hraResponses")
 #async def get_body(items:list[quesResponse]):
 async def get_body(items:responseList):
-        res_data_str = f"{jsonable_encoder(items)}"
+        a=calculateScore(items)
+        req_json=jsonable_encoder(items)
+        res_json=calculateScore.returnJson(a)
+        store_json=json.loads(req_json)
+        store_json.update(res_json)
+        res_data_str = f"{store_json}"
         res_data = res_data_str.encode("utf-8")
         future = publisher.publish(topic_path, res_data)
         print(future.result())
-        a=calculateScore(items)
-        return (calculateScore.returnJson(a))
+        return (res_json)
         #return (items)
 
 @app.post("/recommend/breakfast")
