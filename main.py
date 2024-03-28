@@ -71,11 +71,12 @@ async def get_body(items:responseList):
         res_json=calculateScore.returnJson(a)
         store_json = req_json
         store_json.update(res_json)
-        #print(temp_json)
+        store_json=json.dumps(store_json,indent=2)
+        #print(store_json)
         res_data_str = f"{store_json}"
         res_data = res_data_str.encode("utf-8")
         #print(res_data)
-        future = publisher.publish(topic_path, res_data)
+        future = publisher.publish(store_json, res_data)
         print(future.result())
         return (res_json)
         #return (items)
