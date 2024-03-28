@@ -76,7 +76,7 @@ async def get_body(items:responseList):
         res_data_str = f"{store_json}"
         res_data = res_data_str.encode("utf-8")
         #print(res_data)
-        future = publisher.publish(store_json, res_data)
+        future = publisher.publish(topic_path, store_json)
         print(future.result())
         return (res_json)
         #return (items)
